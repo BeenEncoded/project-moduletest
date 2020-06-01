@@ -1,0 +1,1 @@
+java -jar "project.app\target\project-app-1.0-SNAPSHOT.jar" %*
