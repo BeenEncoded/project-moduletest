@@ -6,7 +6,7 @@
   <groupId>project.app</groupId>
   <artifactId>project-app</artifactId>
   <version>1.0-SNAPSHOT</version>
-
+  
   <name>project-app</name>
   <url></url>
 
@@ -55,6 +55,11 @@
       <artifactId>maven-shade-plugin</artifactId>
       <version>3.2.3</version>
       <type>maven-plugin</type>
+    </dependency>
+    <dependency>
+      <groupId>com.akathist.maven.plugins.launch4j</groupId>
+      <artifactId>launch4j-maven-plugin</artifactId>
+      <version>1.7.25</version>
     </dependency>
   </dependencies>
 
@@ -129,6 +134,51 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+        <artifactId>launch4j-maven-plugin</artifactId>
+        <version>1.7.25</version>
+        <executions>
+
+          <!-- GUI with JavaFX Build: -->
+          <execution>
+            <id>l4j-gui</id>
+            <phase>package</phase>
+            <goals>
+                <goal>launch4j</goal>
+            </goals>
+            <configuration>
+                <headerType>gui</headerType>
+                <outfile>target/${project.name}.exe</outfile>
+                <jar>target/${project.artifactId}-${project.version}.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
+                <errTitle>App Err</errTitle>
+                <classPath>
+                    <mainClass>project.app.Main</mainClass>
+                </classPath>
+                <!-- <icon>src/main/resources/icons/exeIcon.ico</icon> -->
+                <jre>
+                    <path>${java.home}</path>
+                    <bundledJre64Bit>true</bundledJre64Bit>
+                    <initialHeapSize>128</initialHeapSize>
+                    <maxHeapSize>1024</maxHeapSize>
+                </jre>
+                <versionInfo>
+                    <fileVersion>1.0.0.0</fileVersion>
+                    <txtFileVersion>1.0.0.0</txtFileVersion>
+                    <fileDescription>Desc</fileDescription>
+                    <copyright>2020 Jonathan Whitlock</copyright>
+                    <productVersion>1.0.0.0</productVersion>
+                    <txtProductVersion>1.0.0.0</txtProductVersion>
+                    <productName>Product</productName>
+                    <internalName>Product</internalName>
+                    <originalFilename>App.exe</originalFilename>
+                </versionInfo>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
